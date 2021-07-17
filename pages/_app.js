@@ -11,6 +11,8 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: sans-serif;
     background-color: #D9E6F6;
+    background-image: url('https://computerworld.com.br/wp-content/uploads/2020/03/shutterstock_1569125488.png');
+    background-size: cover;
   }
   #__next {
     display: flex;
