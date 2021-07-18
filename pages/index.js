@@ -23,8 +23,29 @@ function ProfileSidebar(propriedades) {
   )
 }
 
+function ProfileRelationsBox(propriedades) {
+  return (
+    <ProfileRelationsBoxWrapper>
+      <h2 className="smallTitle">
+      {propriedades.title} ({propriedades.items.length})
+      </h2>
+      <ul>
+        {/* {seguidores.map((itemAtual) => {
+          return(
+            <li key={itemAtual}>
+              <a href={'https://github.com/${itemAtual}.png'}>
+                <img src={itemAtual.image} />
+                <span>{itemAtual.title}</span>
+              </a>
+            </li>
+          )
+        })} */}
+      </ul>
+    </ProfileRelationsBoxWrapper>
+  )
+}
+
 export default function Home() {
-  
   const usuarioAleatorio = 'dsbernar01'
   const [comunidades, setComunidades ] = React.useState([{
     id: '212114141',
@@ -34,16 +55,27 @@ export default function Home() {
   //const comunidades = comunidades[0];
   //const alteradorDeComunidades = comunidades [1];
   //const comunidades = ['Alurakut'];
-
-
+  
   const pessoasFavoritas = [
     'juunegreiros', 
     'omariosouto', 
     'peas', 
     'rafaballerini', 
     'marcobrunodev', 
-    'felipefialho'];
+    'felipefialho']
 
+
+    const [seguidores, setSeguidores] = React.useState([]);
+    // 0 - Pegar o array de dados do github
+    React.useEffect(function(){
+      fetch('https://api.github.com/users/peas/followers')
+      .then(function (respostaDoServidor){
+        return respostaDoServidor.json();
+      })
+      .then(function (respostaCompleta) {
+        setSeguidores(respostaCompleta);
+      })
+    }, [])
 
   return (
     <>
@@ -54,7 +86,7 @@ export default function Home() {
         </div>
         <div className="welcomeArea" style={{ gridArea: 'welcomeArea' }}>
           <Box>
-            <h1 className="Title">Bem Vindo(a)</h1>
+            <h1 className="title">Bem Vindo(a)</h1>
 
             <OrkutNostalgicIconSet />
           </Box>
@@ -68,11 +100,11 @@ export default function Home() {
               const comunidade = {
                 id: new Date().toISOString(),
                 title: dadosDaForm.get('title'),
-                image: dadosDaForm.get('image')
+                image: dadosDaForm.get('image'),
 
               }
               const comunidadesAtualizadas = [...comunidades, comunidade];
-              setComunidades(comunidadesAtualizadas);
+              setComunidades(comunidadesAtualizadas)
             }}>
               <div>
                 <input 
@@ -90,11 +122,13 @@ export default function Home() {
                 />
               </div>
 
-              <button>Criar comunidade</button>
+              <button type="submit">Criar comunidade</button>
+              
             </form>
           </Box>
         </div>
         <div className="profileRelationsArea" style={{ gridArea: 'profileRelationsArea' }}>
+          <ProfileRelationsBox title="Seguidores" items={seguidores} />
           <ProfileRelationsBoxWrapper>
           <h2 className="smallTitle" >
               Comunidades ({comunidades.length})
