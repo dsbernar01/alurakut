@@ -11,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: sans-serif;
     background-color: #D9E6F6;
-    background-image: url('https://computerworld.com.br/wp-content/uploads/2020/03/shutterstock_1569125488.png');
+    background-image: url('https://poesiaspreferidas.files.wordpress.com/2018/02/moon.gif');
     background-size: cover;
   }
   #__next {
